@@ -1,0 +1,21 @@
+version: '2'
+services:
+    php:
+        build: php-fpm
+        container_name: paymentwall_php
+        ports:
+            - '9002:9000'
+        volumes:
+            - ../public/:/var/www/html
+
+    nginx:
+        build: nginx
+        container_name: paymentwall_nginx
+        ports:
+            - '80:80'
+        links:
+            - php
+        volumes_from:
+            - php
+        volumes:
+            - ../var/log/nginx/:/var/log/nginx:cached
