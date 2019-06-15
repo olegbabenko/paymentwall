@@ -3,6 +3,7 @@
 namespace Payments\Services;
 
 use PaymentsBundle\Controller\ValidatorFactory;
+use PaymentBundle\Dictionary\Payments;
 
 /**
  * Class PaymentsValidator
@@ -14,11 +15,11 @@ class PaymentsValidator
     /**
      * @param array $inputData
      *
-     * @return mixed
+     * @return array
      */
-    public function validate(array $inputData)
+    public function validate(array $inputData): array
     {
-        $validator = ValidatorFactory::create($inputData['payment_type']);
+        $validator = ValidatorFactory::create($inputData[Payments::PAYMENT_TYPE]);
 
         return $validator->validate($inputData);
     }

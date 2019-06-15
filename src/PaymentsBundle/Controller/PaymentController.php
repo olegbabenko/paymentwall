@@ -32,7 +32,8 @@ class PaymentController extends ApiController
      */
     public function index(Request $request): void
     {
-        echo 'Payment controller is alive';
+        //TODO: default page for payments must be here
+        echo 'Wrong route, try another one';
     }
 
     /**
@@ -48,7 +49,7 @@ class PaymentController extends ApiController
         $inputData = $parser->getData($content);
         $result = $this->paymentsValidator->validate($inputData);
 
-        if (!$result){
+        if (count($result) > 1){
             return $this->error($result);
         }
 
