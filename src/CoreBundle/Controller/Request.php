@@ -54,7 +54,13 @@ class Request
      */
     public function getContentType(): string
     {
-        return $_SERVER['HTTP_CONTENT_TYPE'];
+        $contentType = '';
+
+        if (isset($_SERVER['CONTENT_TYPE'])){
+            $contentType = $_SERVER['CONTENT_TYPE'];
+        }
+
+        return $contentType;
     }
 
     /**

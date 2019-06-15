@@ -50,5 +50,8 @@ class Payments
      */
     public const PAYMENT_DATA_EMAIL = 'email';
 
+    /**
+     * @const string
+     */
     public const PAYMENT_NUMERIC_PATTERN = '/\D/';
 }

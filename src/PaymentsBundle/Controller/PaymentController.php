@@ -4,6 +4,8 @@ namespace PaymentsBundle\Controller;
 
 use CoreBundle\Controller\ApiController;
 use CoreBundle\Controller\Request;
+use CoreBundle\Dictionary\RequestParams;
+use PaymentBundle\Dictionary\Payments;
 use Payments\Services\PaymentsValidator;
 use CoreBundle\Controller\JsonResponse;
 
@@ -43,8 +45,23 @@ class PaymentController extends ApiController
      */
     public function validation(Request $request): JsonResponse
     {
+        if ($_SERVER['REQUEST_METHOD'] === RequestParams::REQUEST_METHOD_GET){
+            echo 'This method not allowed';
+            exit();
+        }
+
         $content = $request->getProperties();
         $contentType = $request->getContentType();
+
+        if (!in_array($contentType, RequestParams::ALLOWED_REQUEST_TYPES, true)){
+            return $this->error(
+                 [
+                     'result' => false,
+                     'errors' => 'Parameter \'content type\' of request is not allowed'
+                 ]
+            );
+        }
+
         $parser = ParserFactory::create($contentType);
         $inputData = $parser->getData($content);
         $result = $this->paymentsValidator->validate($inputData);
