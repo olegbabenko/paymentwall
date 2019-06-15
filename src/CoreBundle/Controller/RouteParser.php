@@ -39,7 +39,7 @@ class RouteParser
         $controllerName = null;
         $nameSpace = __NAMESPACE__;
         $actionName = self::DEFAULT_ACTION;
-        $routes = explode('/', $_SERVER['REQUEST_URI']);
+        $routes = explode('/', $_SERVER['DOCUMENT_URI']);
 
         if (count($routes) > 2) {
             [$delimiter, $controllerName, $actionName] = $routes;

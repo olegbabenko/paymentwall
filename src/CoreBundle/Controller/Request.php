@@ -50,6 +50,14 @@ class Request
     }
 
     /**
+     * @return string
+     */
+    public function getContentType(): string
+    {
+        return $_SERVER['HTTP_CONTENT_TYPE'];
+    }
+
+    /**
      * Request init action
      */
     public function init(): void
