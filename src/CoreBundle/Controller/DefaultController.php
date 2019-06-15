@@ -2,12 +2,20 @@
 
 namespace CoreBundle\Controller;
 
+/**
+ * Class DefaultController
+ *
+ * @package CoreBundle\Controller
+ */
 class DefaultController
 {
-
-    function index()
+    /**
+     * Default entry point for application
+     *
+     * @param Request $request
+     */
+    public function index(Request $request)
     {
-        echo 'default controller is alive';
+        echo 'Hi! We`re working hard, so default page coming soon';
     }
-
 }

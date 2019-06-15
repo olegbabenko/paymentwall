@@ -2,11 +2,20 @@
 
 namespace PaymentsBundle\Controller;
 
+use CoreBundle\Controller\Request;
+
+/**
+ * Class PaymentController
+ *
+ * @package PaymentsBundle\Controller
+ */
 class PaymentController
 {
-    public function index()
+    /**
+     * @param Request $request
+     */
+    public function index(Request $request)
     {
-        echo 'payment controller is alive';
+        echo 'Payment controller is alive';
     }
-
 }

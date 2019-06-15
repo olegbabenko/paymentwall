@@ -18,6 +18,11 @@ class Controller
     {
     }
 
+    /**
+     * Front Controller init action
+     *
+     * @throws \ErrorException
+     */
     public static function run(): void
     {
         $instance = new Controller();
@@ -25,15 +30,35 @@ class Controller
         $instance->handleRequest();
     }
 
-    private function handleRequest()
+    /**
+     * @return void
+     *
+     * @throws \Exception
+     */
+    private function handleRequest(): void
     {
         $request = RequestRegistry::getRequest();
+        $this->initRoute($request);
     }
 
-    private function init()
+    /**
+     * @return void
+     *
+     * @throws \ErrorException
+     */
+    private function init(): void
     {
         $applicationHelper = ApplicationHelper::instance();
         $applicationHelper->init();
+    }
 
+    /**
+     * @param Request $request
+     *
+     * @throws \Exception
+     */
+    private function initRoute(Request $request): void
+    {
+        RouteParser::init($request);
     }
 }
