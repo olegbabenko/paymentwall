@@ -6,7 +6,7 @@ services:
         ports:
             - '9002:9000'
         volumes:
-            - ../public/:/var/www/html
+            - ../:/var/www/html
 
     nginx:
         build: nginx

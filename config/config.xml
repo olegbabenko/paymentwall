@@ -1,0 +1,7 @@
+<configuration>
+    <dbHost>localhost</dbHost>
+    <dbUser>root</dbUser>
+    <dbPassword>secret</dbPassword>
+    <dbName>paymentwall</dbName>
+    <dsn>mysql:host=localhost;dbname=paymentwall</dsn>
+</configuration>
