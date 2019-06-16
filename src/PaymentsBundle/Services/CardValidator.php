@@ -61,6 +61,10 @@ class CardValidator extends AbstractValidator
         if (strlen($number) > 16 || strlen($number) < 13){
             $errors[] = 'Wrong format number of credit card';
         }
+
+        if ($this->luhnAlgorithm($number) === false){
+            $errors[] = 'Wrong credit card number';
+        }
     }
 
     /**
@@ -141,5 +145,54 @@ class CardValidator extends AbstractValidator
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
             $errors[] = 'Email is invalid';
         }
+    }
+
+    /**
+     * @param string $cardNumber
+     *
+     * @return bool
+     */
+    private function luhnAlgorithm(string $cardNumber): bool
+    {
+        $numberArray = str_split($cardNumber);
+        $length = count($numberArray);
+        $checkSum = 0;
+        $result = false;
+
+        if ($length % 2 === 0) {
+            for ($i = 0; $i < $length; $i++) {
+                if ($i % 2 === 0) {
+                    $control = $numberArray[$i] * 2;
+
+                    if ($control > 9) {
+                        $checkSum += $control - 9;
+                    } else {
+                        $checkSum += $control;
+                    }
+                } else {
+                    $checkSum += $numberArray[$i];
+                }
+            }
+        } else {
+            for ($i = 0; $i < $length; $i++){
+                if ($i % 2 !== 0){
+                    $control = $numberArray[$i] * 2;
+
+                    if ($control > 9) {
+                        $checkSum += $control - 9;
+                    } else {
+                        $checkSum += $control;
+                    }
+                } else {
+                    $checkSum += $numberArray[$i];
+                }
+            }
+        }
+
+        if ($checkSum % 10 === 0) {
+            $result = true;
+        }
+
+        return $result;
     }
 }
