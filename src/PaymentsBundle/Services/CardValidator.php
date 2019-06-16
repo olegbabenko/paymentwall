@@ -3,6 +3,8 @@
 namespace Payments\Controller;
 
 use PaymentBundle\Dictionary\Payments;
+use CoreBundle\Dictionary\Api;
+use PaymentsBundle\Helpers\Sanitizer;
 
 /**
  * Class CardValidator
@@ -11,6 +13,8 @@ use PaymentBundle\Dictionary\Payments;
  */
 class CardValidator extends AbstractValidator
 {
+    use Sanitizer;
+
     /**
      * @param array $inputData
      *
@@ -27,13 +31,13 @@ class CardValidator extends AbstractValidator
 
         if (count($errors) > 0 ){
             return [
-                'result' => false,
-                'errors' => $errors
+                Api::RESULT => false,
+                Api::ERRORS => $errors
             ];
         }
 
         return [
-            'result' => true
+            Api::RESULT => true
         ];
     }
 
@@ -43,9 +47,20 @@ class CardValidator extends AbstractValidator
      */
     private function checkNumber(string $number, array &$errors): void
     {
+        $number = $this->sanitize($number);
+
        if (empty($number)){
            $errors[] = 'Credit card number is empty';
        }
+
+        if (preg_match(Payments::PAYMENT_NUMERIC_PATTERN, $number) === 1)
+        {
+            $errors[] = 'Invalid value of credit card number';
+        }
+
+        if (strlen($number) > 16 || strlen($number) < 13){
+            $errors[] = 'Wrong format number of credit card';
+        }
     }
 
     /**
@@ -54,6 +69,8 @@ class CardValidator extends AbstractValidator
      */
     private function checkDate(string $date, array &$errors): void
     {
+        $date = $this->sanitize($date);
+
         if (empty($date)){
             $errors[] = 'Expiration date is empty';
         }
@@ -93,6 +110,8 @@ class CardValidator extends AbstractValidator
      */
     private function checkCvv(string $cvv, array &$errors): void
     {
+        $cvv = $this->sanitize($cvv);
+
         if (empty($cvv)){
             $errors[] = 'CVV2 is empty';
         }
@@ -113,6 +132,8 @@ class CardValidator extends AbstractValidator
      */
     private function checkEmail(string $email, array &$errors): void
     {
+        $email = $this->sanitize($email);
+
         if (empty($email)){
             $errors[] = 'Email is empty';
         }

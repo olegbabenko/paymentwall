@@ -43,4 +43,9 @@ class Api
      * @const string
      */
     public const RESULT = 'result';
+
+    /**
+     * @const string
+     */
+    public const ERRORS = 'errors';
 }

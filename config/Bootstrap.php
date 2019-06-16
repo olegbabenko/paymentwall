@@ -18,6 +18,8 @@ require_once 'src/CoreBundle/Controller/ApiController.php';
 
 require_once 'src/PaymentsBundle/Dictionary/Payments.php';
 
+require_once 'src/PaymentsBundle/Helpers/Sanitizer.php';
+
 require_once 'src/PaymentsBundle/Controller/PaymentController.php';
 require_once 'src/PaymentsBundle/Controller/AbstractParserFactory.php';
 require_once 'src/PaymentsBundle/Controller/ParserFactory.php';

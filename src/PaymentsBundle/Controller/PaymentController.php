@@ -8,6 +8,7 @@ use CoreBundle\Dictionary\RequestParams;
 use PaymentBundle\Dictionary\Payments;
 use Payments\Services\PaymentsValidator;
 use CoreBundle\Controller\JsonResponse;
+use CoreBundle\Dictionary\Api;
 
 /**
  * Class PaymentController
@@ -56,14 +57,25 @@ class PaymentController extends ApiController
         if (!in_array($contentType, RequestParams::ALLOWED_REQUEST_TYPES, true)){
             return $this->error(
                  [
-                     'result' => false,
-                     'errors' => 'Parameter \'content type\' of request is not allowed'
+                     Api::RESULT => false,
+                     Api::ERRORS => 'Parameter \'content type\' of request is not allowed'
                  ]
             );
         }
 
         $parser = ParserFactory::create($contentType);
         $inputData = $parser->getData($content);
+        $hashResult = $this->hashValidate($inputData);
+
+        if ($hashResult){
+            return $this->error(
+                [
+                    Api::RESULT => false,
+                    Api::ERRORS => 'Incorrect hash value'
+                ]
+            );
+        }
+
         $result = $this->paymentsValidator->validate($inputData);
 
         if (count($result) > 1){
@@ -71,5 +83,24 @@ class PaymentController extends ApiController
         }
 
         return $this->success(true);
+    }
+
+    /**
+     * @param $inputData
+     *
+     * @return bool
+     */
+    private function hashValidate($inputData): bool
+    {
+        $hash = $inputData[Payments::PAYMENT_DATA_HASH];
+        unset($inputData[Payments::PAYMENT_DATA_HASH], $inputData[Payments::PAYMENT_TYPE]);
+        $newHash = md5(json_encode($inputData));
+        $result = hash_equals($hash, $newHash);
+
+        if ($result){
+            return true;
+        }
+
+        return false;
     }
 }
