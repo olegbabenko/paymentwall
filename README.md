@@ -53,10 +53,17 @@ XML format:
    XML format: 
    > <data>
          <id>1</id>,
-         <payment_type>card</payment_type>,
+         <payment_type>mobile</payment_type>,
          <hash>593dd062791f8616937dcc6ab2675d1a</hash>,
          <timestamp>1560666140</timestamp>,
          <payment_data>
              <number>380442221111</number>
          </payment_data>
     
+    
+    
+Also you can run this application on your host machine. 
+You should do for this next steps:
+* clone this repository for your machine    
+* in folder paymentwall/docker run command : ```docker-compose build``` and after```docker-compose up -d```
+* add raw ```127.0.0.1 paymentwall.test``` in /etc/hosts and enjoy the application
