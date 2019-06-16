@@ -66,4 +66,4 @@ Also you can run this application on your host machine.
 You should do for this next steps:
 * clone this repository for your machine    
 * in folder paymentwall/docker run command : ```docker-compose build``` and after```docker-compose up -d```
-* add raw ```127.0.0.1 paymentwall.test``` in /etc/hosts and enjoy the application
+* add row ```127.0.0.1 paymentwall.test``` in /etc/hosts and enjoy the application
